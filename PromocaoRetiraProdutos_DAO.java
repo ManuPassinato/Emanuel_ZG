@@ -23,7 +23,7 @@ public class PromocaoRetiraProdutos_DAO {
 			adiciona.setLong(1, promocao.getId());
 			adiciona.setString(2, promocao.getDescricao());
 			adiciona.setString(3, promocao.getObs());
-			adiciona.setFloat(4, promocao.getQuant_ativa());
+			adiciona.setFloat(4, promocao.getQuantAtiva());
 			adiciona.setFloat(5, (Float) null);
 			adiciona.setLong(6, promocao.getQuant_paga());
 			
@@ -36,7 +36,7 @@ public class PromocaoRetiraProdutos_DAO {
 		}}
 
 	public static PromocaoRetiraProdutos getPromocao(int id) {
-		PromocaoRetiraProdutos promocao = new PromocaoRetiraProdutos(id, 0, 0, null, null);
+		PromocaoRetiraProdutos promocao = new PromocaoRetiraProdutos(null, null, id, id, id);
 		try(Connection conexao = FabricaConexao.getConexao();
 		
 		PreparedStatement consulta = conexao.prepareStatement(Consulta_SQLPROMOCAO)){
@@ -46,7 +46,7 @@ public class PromocaoRetiraProdutos_DAO {
 		
 			promocao.setDescricao(resultado.getString("decicao"));
 			promocao.setObs(resultado.getString("obs"));
-			promocao.setQuant_ativa(resultado.getInt("quant_ativa"));
+			promocao.setQuantAtiva(resultado.getInt("quant_ativa"));
 			promocao.setQuant_paga(resultado.getInt("quant_paga"));	
 		
 		}
@@ -65,7 +65,7 @@ public class PromocaoRetiraProdutos_DAO {
 		
 		consulta.setString(1, promocao.getDescricao());
 		consulta.setString(2, promocao.getObs());
-		consulta.setInt(3, promocao.getQuant_ativa());
+		consulta.setInt(3, promocao.getQuantAtiva());
 		consulta.setFloat(4, promocao.getQuant_paga());
 		consulta.setInt(5, promocao.getId());
 		}

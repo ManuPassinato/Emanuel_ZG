@@ -6,23 +6,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Produto_DAO {
-	private static final String ADD_SQLPRODUTO = "INSERT INTO produtos (id,descrcao,preco)"
+	private static final String ADD_SQLPRODUTO = "INSERT INTO produtos (id,descricao,preco)"
 			+ "VALUES (?,?,?);" ;
 	
-	private static final String ADD_SQLPROMOCAO= "INSERT INTO relacionamento (idProduto,idPromocao)"
+	private static final String ADD_SQLPROMOCAO= "UPDATE produtos SET idPromocao = ? WHERE id = ? ";
+	
+	private static final String GET_PRODUTO= "SELECT * FROM produtos where id = ? "
 			+ "VALUES (?,?);" ;
 	
-	private static final String GET_PRODUTO= "SELECT * FROM produtos where id = ?;"
+	private static final String GET_PRODUTO2= "SELECT * FROM produtos where descricao = ? "
 			+ "VALUES (?,?);" ;
-	
-	private static final String GET_PRODUTO2= "SELECT * FROM produtos where descricao = ?;"
-			+ "VALUES (?,?);" ;
-	
-	private static final String ALTERA_SQLPRODUTO  = "UPDATE produto SET "
-			+ "descicao = ?, preco = ? WHERE id = ?";
+
+	private static final String ALTERA_SQLPRODUTO  = "UPDATE produtos SET descricao = ?, preco = ? WHERE id = ?";
+
 	
 	
-	public static void adicionaProduto(Produto produto,Integer idPromocao) {
+	public static void adicionaProduto(Produto produto) {
 		
 		try(Connection conexao = FabricaConexao.getConexao();
 		PreparedStatement adiciona = conexao.prepareStatement(ADD_SQLPRODUTO)){
@@ -31,16 +30,10 @@ public class Produto_DAO {
 			adiciona.setString(2, produto.getDescricao());
 			adiciona.setFloat(3, produto.getPreco());
 			
-			
-			if(idPromocao != null) {
-				
-			Produto_DAO.AddPromocao(produto,idPromocao);
-			}
-			
 			adiciona.executeUpdate();
 		} 
 		catch (SQLException e) {
-			
+			e.printStackTrace();
 			e.getMessage();
 		}	
 		
@@ -75,7 +68,6 @@ public class Produto_DAO {
 			consulta.setString(1, descricao);
 			
 			ResultSet resultado = consulta.executeQuery();
-			
 			produto.setId(resultado.getInt("id"));
 			produto.setPreco(resultado.getFloat("preco"));
 			
@@ -97,25 +89,27 @@ public class Produto_DAO {
 		      altera.setString(1, produto.getDescricao());
 		      altera.setFloat(2, produto.getPreco());
 		      altera.setInt(3, produto.getId());
+		    
+		      altera.executeUpdate();
 		      }
 		      catch (SQLException e) {
 
-			e.getMessage();
+			e.printStackTrace();
 		      }
 		 }
 		
+		
 			
-		public static void  AddPromocao(Produto produto,Integer idPromocao) {
+		public static void  AlteraPromocao(Produto produto,Integer idPromocao) {
 			 try(Connection conexao = FabricaConexao.getConexao();
 
 			 PreparedStatement altera = conexao.prepareStatement(ADD_SQLPROMOCAO)){
 
-			      
-			    altera.setInt(1,produto.getId());
-				altera.setInt(2,idPromocao);
+				altera.setInt(1,idPromocao);
+				altera.setInt(2,produto.getId());
+				
 				altera.executeUpdate();
-					
-					
+						
 					
 			   }
 			  catch (SQLException e) {
