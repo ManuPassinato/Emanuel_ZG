@@ -15,6 +15,8 @@ public class Produto_DAO {
 			+ "VALUES (?,?);" ;
 	private static final String GET_PRODUTO2= "SELECT * FROM produtos where descricao = ?;"
 			+ "VALUES (?,?);" ;
+	private static final String ALTERA_SQLPRODUTO  = "UPDATE produto SET "
+			+ "descicao = ?, preco = ? WHERE id = ?";
 	
 	public void adicionaProduto(Produto produto,Integer idPromocao) {
 		
@@ -28,10 +30,7 @@ public class Produto_DAO {
 			
 			if(idPromocao != null) {
 				
-			PreparedStatement adicionaPromocao = conexao.prepareStatement(ADD_SQLPROMOCAO);
-			adicionaPromocao.setInt(1,produto.getId());
-			adicionaPromocao.setInt(2,idPromocao);
-			adicionaPromocao.executeUpdate();
+			Produto_DAO.AdicionaPromocao(produto,idPromocao);
 			}
 			
 			adiciona.executeUpdate();
@@ -84,6 +83,36 @@ public class Produto_DAO {
 		return produto;
 		
 	}
+	//alterado:
+		public void AlteraProduto(Produto produto) {
+		      try(Connection conexao = FabricaConexao.getConexao();
+
+		      PreparedStatement altera = conexao.prepareStatement(ALTERA_SQLPRODUTO)){
+
+		      
+		      altera.setInt(1, produto.getDescicao());
+		      altera.setInt(2, produto.getPreco());
+		      altera.setInt(3, produto.getId());
+		      }
+		      catch (SQLException e) {
+
+			e.getMessage();
+		      }
+		 }
+	
+	public void AdicionaPromocao(Produto produto,int idPromocao) {
+		      try(Connection conexao = FabricaConexao.getConexao();
+
+		     PreparedStatement adicionaPromocao = conexao.prepareStatement(ADD_SQLPROMOCAO);
+			adicionaPromocao.setInt(1,produto.getId());
+			adicionaPromocao.setInt(2,idPromocao);
+			adicionaPromocao.executeUpdate();
+		      }
+		      catch (SQLException e) {
+
+			e.getMessage();
+		      }
+		 }
 	}
 	
 	
