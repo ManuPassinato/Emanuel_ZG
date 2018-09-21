@@ -6,8 +6,6 @@ import java.sql.SQLException;
 
 public class BootStrap {
 
-	private static final String CREAT_DB = "CREATEDB emanuel";
-	
 	private static final String CREAT_TABLERODUTO = "CREATE TABLE produtos IF NOT EXISTS"
 			+ "(id int NOT NULL PRIMERY KEY,"
 			+ "decicao varchar(60),"
@@ -25,55 +23,30 @@ public class BootStrap {
 			+ "(idProduto int references produtos(id),"
 			+ "idPromocao int references promocao(id));";
 	
-	public void Criabd() {
-		try(Connection conexao = FabricaConexao.getConexao();
-		PreparedStatement adiciona = conexao.prepareStatement(CREAT_DB)){
-			
-			adiciona.executeUpdate();
-		} 
-		catch (SQLException e) {
-			
-			e.getMessage();
-		}	
-	}
 	
-	public void CriaTableProduto() {
+	public static void CriaTabelas() {
 		try(Connection conexao = FabricaConexao.getConexao();
-		PreparedStatement adiciona = conexao.prepareStatement(CREAT_TABLERODUTO)){
+		PreparedStatement CriaProdutos = conexao.prepareStatement(CREAT_TABLERODUTO)){
 				
-			adiciona.executeUpdate();
-		} 
-		catch (SQLException e) {
-				
-			e.getMessage();
-		}
-	}
+			CriaProdutos.executeUpdate();
 		
-	public void CriaTablePromocoes() {
-		try(Connection conexao = FabricaConexao.getConexao();
-		PreparedStatement adiciona = conexao.prepareStatement(CREAT_TABLEPROMOCAO)){
+		PreparedStatement CriaPromocoes = conexao.prepareStatement(CREAT_TABLEPROMOCAO);
 					
-			adiciona.executeUpdate();
-		} 
-		catch (SQLException e) {
-					
-			e.getMessage();
-		}
-	}
-	
-	public void CriaTableRelacionamento() {
-		try(Connection conexao = FabricaConexao.getConexao();
-		PreparedStatement adiciona = conexao.prepareStatement(CREAT_TABLERELACIONAMENTO)){
+			CriaPromocoes.executeUpdate();
+		
+		PreparedStatement CriaRelacionamento = conexao.prepareStatement(CREAT_TABLERELACIONAMENTO);
 						
-			adiciona.executeUpdate();
-		} 
+			CriaRelacionamento.executeUpdate();
+		}
 		catch (SQLException e) {
 						
 			e.getMessage();
-		}	
-		
-	
+		}
+
 	}
+	
+	
+}
 
 	
 	
@@ -86,4 +59,4 @@ public class BootStrap {
 	
 	
 	
-}
+

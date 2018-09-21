@@ -16,9 +16,9 @@ public class Calcula {
 		float descontoTotal=0;
 		
 		for(int i=0;i<compra.size();i++) {
-			//if(compra.get(i).produto.promocao!=null)
+			if(compra.get(i).produto.promocao!=null)
 			{
-				//descontoTotal += compra.get(i).produto.promocao.getDesconto(compra.get(i).getQuantidade(), compra.get(i).produto.getPreco());
+				descontoTotal += compra.get(i).produto.promocao.getDesconto(compra.get(i).getQuantidade(), compra.get(i).produto.getPreco());
 			}
 		}
 	return descontoTotal;

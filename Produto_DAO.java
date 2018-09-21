@@ -11,14 +11,18 @@ public class Produto_DAO {
 	
 	private static final String ADD_SQLPROMOCAO= "INSERT INTO relacionamento (idProduto,idPromocao)"
 			+ "VALUES (?,?);" ;
+	
 	private static final String GET_PRODUTO= "SELECT * FROM produtos where id = ?;"
 			+ "VALUES (?,?);" ;
+	
 	private static final String GET_PRODUTO2= "SELECT * FROM produtos where descricao = ?;"
 			+ "VALUES (?,?);" ;
+	
 	private static final String ALTERA_SQLPRODUTO  = "UPDATE produto SET "
 			+ "descicao = ?, preco = ? WHERE id = ?";
 	
-	public void adicionaProduto(Produto produto,Integer idPromocao) {
+	
+	public static void adicionaProduto(Produto produto,Integer idPromocao) {
 		
 		try(Connection conexao = FabricaConexao.getConexao();
 		PreparedStatement adiciona = conexao.prepareStatement(ADD_SQLPRODUTO)){
@@ -30,7 +34,7 @@ public class Produto_DAO {
 			
 			if(idPromocao != null) {
 				
-			Produto_DAO.AdicionaPromocao(produto,idPromocao);
+			Produto_DAO.AddPromocao(produto,idPromocao);
 			}
 			
 			adiciona.executeUpdate();
@@ -42,7 +46,7 @@ public class Produto_DAO {
 		
 	}
 	
-	public Produto getProduto(int id) {
+	public static Produto getProduto(int id) {
 		Produto produto = new Produto(id,0,null);
 		try(Connection conexao = FabricaConexao.getConexao();
 				PreparedStatement consulta = conexao.prepareStatement(GET_PRODUTO)){
@@ -63,7 +67,7 @@ public class Produto_DAO {
 		
 	}
 	
-	public Produto getProduto(String descricao) {
+	public static Produto getProduto(String descricao) {
 		Produto produto = new Produto((Integer) null,0,descricao);
 		try(Connection conexao = FabricaConexao.getConexao();
 				PreparedStatement consulta = conexao.prepareStatement(GET_PRODUTO2)){
@@ -83,15 +87,15 @@ public class Produto_DAO {
 		return produto;
 		
 	}
-	//alterado:
-		public void AlteraProduto(Produto produto) {
+	
+		public static void AlteraProduto(Produto produto) {
 		      try(Connection conexao = FabricaConexao.getConexao();
 
 		      PreparedStatement altera = conexao.prepareStatement(ALTERA_SQLPRODUTO)){
 
 		      
-		      altera.setInt(1, produto.getDescicao());
-		      altera.setInt(2, produto.getPreco());
+		      altera.setString(1, produto.getDescricao());
+		      altera.setFloat(2, produto.getPreco());
 		      altera.setInt(3, produto.getId());
 		      }
 		      catch (SQLException e) {
@@ -99,21 +103,28 @@ public class Produto_DAO {
 			e.getMessage();
 		      }
 		 }
+		
+			
+		public static void  AddPromocao(Produto produto,Integer idPromocao) {
+			 try(Connection conexao = FabricaConexao.getConexao();
+
+			 PreparedStatement altera = conexao.prepareStatement(ADD_SQLPROMOCAO)){
+
+			      
+			    altera.setInt(1,produto.getId());
+				altera.setInt(2,idPromocao);
+				altera.executeUpdate();
+					
+					
+					
+			   }
+			  catch (SQLException e) {
+
+		       e.getMessage();
+			      }
+			 }
 	
-	public void AdicionaPromocao(Produto produto,int idPromocao) {
-		      try(Connection conexao = FabricaConexao.getConexao();
-
-		     PreparedStatement adicionaPromocao = conexao.prepareStatement(ADD_SQLPROMOCAO);
-			adicionaPromocao.setInt(1,produto.getId());
-			adicionaPromocao.setInt(2,idPromocao);
-			adicionaPromocao.executeUpdate();
-		      }
-		      catch (SQLException e) {
-
-			e.getMessage();
-		      }
-		 }
-	}
+}
 	
 	
 

@@ -17,7 +17,7 @@ public class PromocaoRetiraValor_DAO {
 			+ "descricao = ?, obs = ?, quant_ativa = ?, preco_final = ? WHERE id = ?";
 	
 	
-	public void adicionaPromocao(PromocaoRetiraValor promocao) {
+	public static void adicionaPromocao(PromocaoRetiraValor promocao) {
 		try(Connection conexao = FabricaConexao.getConexao();
 		PreparedStatement adiciona = conexao.prepareStatement(ADD_SQLPROMOCAO)){
 			
@@ -36,7 +36,7 @@ public class PromocaoRetiraValor_DAO {
 			e.getMessage();
 		}}
 	
-	public PromocaoRetiraValor getPromocao(int id) {
+	public static PromocaoRetiraValor getPromocao(int id) {
 		PromocaoRetiraValor promocao = new PromocaoRetiraValor(id, 0, 0, null, null);
 		try(Connection conexao = FabricaConexao.getConexao();
 		
@@ -58,7 +58,7 @@ public class PromocaoRetiraValor_DAO {
 		return promocao;
 		}
 	
-	public void AlteraPromocao(PromocaoRetiraValor promocao) {
+	public static void AlteraPromocao(PromocaoRetiraValor promocao) {
 		try(Connection conexao = FabricaConexao.getConexao();
 		
 		PreparedStatement consulta = conexao.prepareStatement(Altera_SQLPROMOCAO)){
