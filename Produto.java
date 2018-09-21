@@ -4,7 +4,7 @@ public class Produto {
 	
 	private float preco;
 	private String descricao;
-	private int id;
+	private Integer id;
 	
 	public Produto(int id,float preco, String descricao) {
 		this.preco=preco;
@@ -32,5 +32,9 @@ public class Produto {
 		return id;
 	}
 	
+	public void setId(int id) {
+		this.id = id;
+			
+	}
 	
 }
