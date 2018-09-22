@@ -17,12 +17,13 @@ public class LeitorDeRegex {
 	
 	public static List<String> getResult(String regex,String text) {
 		List<String> participantList = new ArrayList<>();
-	 
+		
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(text);
 	 
 		while(matcher.find()) {
 			String participantName = matcher.group();
+			System.out.println(participantName);
 			participantList.add(participantName);
 		}
 	 
@@ -30,22 +31,22 @@ public class LeitorDeRegex {
 	}
 	
 	public static List<String> getId(String text){
-		String regex = null;
+		String regex = "(?<=id:\\s)[^\\|]+";
 		return	getResult(regex,text);
 	}
 	
 	public static List<String> getPreco(String text){
-		String regex = null;
+		String regex = "(?<=valor:\\s)[^\\.]+.\\d\\d";
 		return getResult(regex,text);
 	}
 	
 	public static List<String> getDescicao(String text){
-		String regex = null;
+		String regex = "(?<=descricao:\\s)[^\\|]+";
 		return getResult(regex,text);
 	}
 	
 	public static List<String> getPromocao(String text){
-		String regex = null;
+		String regex = "(?<=promocao:\\s)[^\\|]+";
 		return getResult(regex,text);
 	}
 	
@@ -54,12 +55,13 @@ public class LeitorDeRegex {
 		
 			ArrayList<String> idlist = (ArrayList<String>) getId(text); 
 			ArrayList<String> precolist = (ArrayList<String>) getPreco(text);
+			
 			ArrayList<String> descricaolist = (ArrayList<String>) getDescicao(text);
 		
 			Integer id;
 			String descicao;
 			Float preco;
-		
+			
 				for(int i=0;i<idlist.size();i++) {
 					
 						id = Integer.parseInt(idlist.get(i));

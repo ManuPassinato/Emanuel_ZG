@@ -1,6 +1,9 @@
 package GerenciadorDeDados;
 
 import java.awt.List;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -42,10 +45,31 @@ public class BootStrap {
 		}
 
 	}
+	
+	
+	public static String lerArquivo(String strCaminho) {
 
-	public static void reencheProdutos(String txt) {
-		ArrayList<Produto> produtos = LeitorDeRegex.getProdutos(txt);
-		ArrayList<String> promocoes = (ArrayList<String>) LeitorDeRegex.getPromocao(txt);
+		  try {
+		 BufferedReader in = new BufferedReader(new FileReader(strCaminho));
+		 String str;
+		 StringBuffer buf = new StringBuffer();
+		 while (in.ready()) {
+		  str = in.readLine();
+		  buf.append(str);
+		 }
+		 in.close();
+		 return buf.toString();
+		  } catch (Exception e) {
+		 e.printStackTrace();
+		 return null;
+		  }
+		}
+
+	public static void preencheProdutos(String caminho) {
+		String texto = lerArquivo(caminho);
+		
+		ArrayList<Produto> produtos = LeitorDeRegex.getProdutos(texto);
+		ArrayList<String> promocoes = (ArrayList<String>) LeitorDeRegex.getPromocao(texto);
 		
 		for(int i=0;i<produtos.size();i++) {
 			Produto_DAO.adicionaProduto(produtos.get(i));
