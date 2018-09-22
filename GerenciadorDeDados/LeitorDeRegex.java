@@ -23,7 +23,6 @@ public class LeitorDeRegex {
 	 
 		while(matcher.find()) {
 			String participantName = matcher.group();
-			System.out.println(participantName);
 			participantList.add(participantName);
 		}
 	 
@@ -55,7 +54,6 @@ public class LeitorDeRegex {
 		
 			ArrayList<String> idlist = (ArrayList<String>) getId(text); 
 			ArrayList<String> precolist = (ArrayList<String>) getPreco(text);
-			
 			ArrayList<String> descricaolist = (ArrayList<String>) getDescicao(text);
 		
 			Integer id;

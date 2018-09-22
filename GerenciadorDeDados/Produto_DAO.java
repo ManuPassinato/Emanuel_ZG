@@ -29,8 +29,7 @@ public class Produto_DAO {
 		
 	}
 	
-	private static final String GET_PRODUTO= "SELECT * FROM produtos where id = ? "
-			+ "VALUES (?,?);" ;
+	private static final String GET_PRODUTO= "SELECT * FROM produtos where id = ? ";
 	
 	public static Produto getProduto(int id) {
 		Produto produto = new Produto(id,0,null);
@@ -41,7 +40,7 @@ public class Produto_DAO {
 			consulta.setInt(1, id);
 			
 			ResultSet resultado = consulta.executeQuery();
-			produto.setDescricao(resultado.getString("descicao"));
+			produto.setDescricao(resultado.getString("descricao"));
 			produto.setPreco(resultado.getFloat("preco"));
 			
 		} 
@@ -53,8 +52,7 @@ public class Produto_DAO {
 	return produto;	
 	}
 	
-	private static final String GET_PRODUTO2= "SELECT * FROM produtos where descricao = ? "
-			+ "VALUES (?,?);" ;
+	private static final String GET_PRODUTO2= "SELECT * FROM produtos where descricao = ? ";
 	
 	public static Produto getProduto(String descricao) {
 		Produto produto = new Produto((Integer) null,0,descricao);

@@ -13,36 +13,40 @@ public class Promocao_DAO {
 	
 	
 
-	private static final String ADD_SQLPROMOCAO  = "INSERT INTO promocao (id,descricao,obs,quantativa,precofinal,quantpaga)"
-			+ "VALUES (?,?,?,?,?,?);" ;
+	private static final String ADD_SQLPROMOCAO1  = "INSERT INTO promocao (id,descricao,obs,quantativa,quantpaga)"
+			+ "VALUES (?,?,?,?,?);" ;
+	private static final String ADD_SQLPROMOCAO2  = "INSERT INTO promocao (id,descricao,obs,quantativa,precofinal)"
+			+ "VALUES (?,?,?,?,?);" ;
 	
-	public static void adicionaPromocao (PromocaoRetiraProdutos promocao) {
+	public static void adicionaPromocao (Promocao promocao) {
 		try(Connection conexao = FabricaConexao.getConexao();
-		PreparedStatement adiciona = conexao.prepareStatement(ADD_SQLPROMOCAO)){
+		PreparedStatement adicionaRetiraValor = conexao.prepareStatement(ADD_SQLPROMOCAO2);
+		PreparedStatement adicionaRetiraProduto = conexao.prepareStatement(ADD_SQLPROMOCAO1)){
 			
 			String tipodepromocao = promocao.conferePromocao(promocao);
 			
 			if(tipodepromocao.equals("RetiraProduto")) {
 				
-				adiciona.setLong(1, promocao.getId());
-				adiciona.setString(2, promocao.getDescricao());
-				adiciona.setString(3, promocao.getObs());
-				adiciona.setFloat(4, promocao.getQuantAtiva());
-				adiciona.setFloat(5, (Float) null);
-				adiciona.setLong(6, promocao.getQuant_paga());
+				adicionaRetiraProduto.setLong(1, promocao.getId());
+				adicionaRetiraProduto.setString(2, promocao.getDescricao());
+				adicionaRetiraProduto.setString(3, promocao.getObs());
+				adicionaRetiraProduto.setFloat(4, promocao.getQuantAtiva());
+				adicionaRetiraProduto.setFloat(5, promocao.getQuantpaga());
 				
+				adicionaRetiraProduto.executeUpdate();
 			}else if(tipodepromocao.equals("RetiraValor")) {
 				
-				adiciona.setLong(1, promocao.getId());
-				adiciona.setString(2, promocao.getDescricao());
-				adiciona.setString(3, promocao.getObs());
-				adiciona.setFloat(4, promocao.getQuantAtiva());
-				adiciona.setFloat(5, promocao.getPreco_final());
-				adiciona.setLong(6, (Integer)null);
+				adicionaRetiraValor.setLong(1, promocao.getId());
+				adicionaRetiraValor.setString(2, promocao.getDescricao());
+				adicionaRetiraValor.setString(3, promocao.getObs());
+				adicionaRetiraValor.setFloat(4, promocao.getQuantAtiva());
+				adicionaRetiraValor.setFloat(5, promocao.getPreco_final());
+				
+				adicionaRetiraValor.executeUpdate();
 				
 			}
 			
-			adiciona.executeUpdate();
+			
 		} 
 		catch (Exception e) {
 			
@@ -61,7 +65,7 @@ public class Promocao_DAO {
 			
 			if(resultado.getFloat("precofinal") == (Float)null) {
 				
-				promocao = new PromocaoRetiraProdutos(null, null, id, id, id);
+				promocao = new PromocaoRetiraProdutos(id, null, null, id, id);
 				promocao.setDescricao(resultado.getString("decicao"));
 				promocao.setObs(resultado.getString("obs"));
 				promocao.setQuantAtiva(resultado.getInt("quantativa"));
@@ -69,7 +73,7 @@ public class Promocao_DAO {
 				
 			}else if(resultado.getInt("quantpaga")== (Integer)null) {
 				
-				promocao = new PromocaoRetiraValor(null, null, id, id, id);
+				promocao = new PromocaoRetiraValor(id, null, null, id, id);
 				promocao.setDescricao(resultado.getString("decicao"));
 				promocao.setObs(resultado.getString("obs"));
 				promocao.setQuantAtiva(resultado.getInt("quantativa"));

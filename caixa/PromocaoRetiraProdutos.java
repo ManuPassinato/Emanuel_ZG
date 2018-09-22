@@ -3,7 +3,7 @@ package caixa;
 public class PromocaoRetiraProdutos extends Promocao{
 	
 	
-	public PromocaoRetiraProdutos(String descricao, String obs, int quantativa, Integer id,int quantpaga) {
+	public PromocaoRetiraProdutos(Integer id, String descricao, String obs, int quantativa, int quantpaga) {
 		super(descricao, obs, quantativa, id);
 		super.quantpaga=quantpaga;
 		super.preco_final = (Float) null;

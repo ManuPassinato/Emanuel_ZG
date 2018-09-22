@@ -14,7 +14,7 @@ public abstract class Promocao {
 	public String descricao,obs;
 	public int quantativa;
 	public Integer id;
-	float preco_final;
+	Float preco_final;
 	Integer quantpaga;
 
 	public abstract float getDesconto(int quantidade,float preco);
@@ -25,7 +25,7 @@ public abstract class Promocao {
 		if(promocao.getQuantpaga() == (Integer)null) {
 			return "RetiraValor";
 		}
-		else if(promocao.getPreco_final() == (Float) null) {
+		else if(promocao.getPreco_final() == (Float)null) {
 			return "RetiraProduto";
 		}
 		
@@ -76,7 +76,7 @@ public abstract class Promocao {
 		this.id = id;
 	}
 	
-	public float getPreco_final() {
+	public Float getPreco_final() {
 		return preco_final;
 	}
 
@@ -84,7 +84,7 @@ public abstract class Promocao {
 		this.preco_final = preco_final;
 	}
 
-	public int getQuantpaga() {
+	public Integer getQuantpaga() {
 		return quantpaga;
 	}
 

@@ -10,17 +10,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import caixa.Produto;
+import caixa.Promocao;
+import jxl.read.biff.BiffException;
 
 
 public class BootStrap {
 
-	private static final String CREAT_TABLERODUTO = "CREATE TABLE IF NOT EXISTS produtos"
+	private static final String CREAT_TABLERODUTO = "CREATE TABLE produtos"
 			+ "(id int NOT NULL PRIMARY KEY,"
 			+ "descricao varchar(60),"
 			+ "preco decimal(6,2) NOT NULL,"
 			+ "idPromocao int references promocao(id));";
 	
-	private static final String CREAT_TABLEPROMOCAO = "CREATE TABLE IF NOT EXISTS promocao"
+	private static final String CREAT_TABLEPROMOCAO = "CREATE TABLE promocao"
 			+ "(id int NOT NULL PRIMARY KEY,"
 			+ "descricao varchar(60),"
 			+ "obs varchar(60),"
@@ -81,6 +83,22 @@ public class BootStrap {
 		}
 	}
 	
+	public static void geradorPromocao(String url) throws SQLException {
+		ArrayList<Promocao> promocao;
+		try {
+			promocao = LeitorExcel.lerPromocao(url);
+			for(int i = 0; i<promocao.size();i++) {
+				
+				Promocao_DAO.adicionaPromocao(promocao.get(i));
+			
+		}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		
+	}
 	
 }
 
