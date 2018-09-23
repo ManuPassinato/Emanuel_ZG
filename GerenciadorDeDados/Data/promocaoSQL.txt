@@ -1,4 +1,4 @@
-CREATE TABLE promocao
+CREATE TABLE IF NOT EXISTS promocao
 (id int NOT NULL PRIMARY KEY,
 descricao varchar(60),
 obs varchar(60),
