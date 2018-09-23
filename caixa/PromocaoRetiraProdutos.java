@@ -12,9 +12,11 @@ public class PromocaoRetiraProdutos extends Promocao{
 	public float getDesconto(int quantidade, float preco) {
 		int verificador;
 		verificador = quantidade/quantativa;
+		
 		if(verificador>=1) {
 			return preco*((quantativa-quantpaga)*verificador);
 		}
+		
 	return 0;
 	}
 

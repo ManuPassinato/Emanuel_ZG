@@ -5,23 +5,43 @@ public class Calcula {
 	public static float getPrecoBruto(List<Item> compra){
 		float precoTotal=0;
 		
+		
 		for(int i=0;i<compra.size();i++) {
-			precoTotal += compra.get(i).produto.getPreco() * compra.get(i).getQuantidade();
+			
+			Float precoProduto = compra.get(i).produto.getPreco();
+			Integer quantidade = compra.get(i).getQuantidade();	
+		
+			Float precoItem = precoProduto * quantidade;
+		
+			precoTotal += precoItem;
 		}
+		
 	return precoTotal;
 	}
 	
-	//precisamos redefinir
+	
 	public static float getDesconto(List<Item> compra) {
 		float descontoTotal=0;
 		
 		for(int i=0;i<compra.size();i++) {
-			if(compra.get(i).produto.promocao!=null)
+			Item item = compra.get(i);
+			
+			if(item.produto.getPromocao()!=null)
 			{
-				descontoTotal += compra.get(i).produto.promocao.getDesconto(compra.get(i).getQuantidade(), compra.get(i).produto.getPreco());
+				Float descontoItem = item.produto.getPromocao().getDesconto(item.getQuantidade(), item.produto.getPreco());
+				
+				descontoTotal += descontoItem;
+				
 			}
 		}
 	return descontoTotal;
+	}
+	
+public static float getPrecoLiquido(List<Item> compra) {
+		
+		float precoLiquido=0;
+		precoLiquido=	getPrecoBruto(compra)	-	getDesconto(compra);
+		return precoLiquido;
 	}
 	
 }

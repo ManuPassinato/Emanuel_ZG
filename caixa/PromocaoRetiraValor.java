@@ -1,5 +1,7 @@
 package caixa;
 
+import GerenciadorDeDados.Produto_DAO;
+
 public class PromocaoRetiraValor extends Promocao{
 
 	
@@ -13,13 +15,20 @@ public class PromocaoRetiraValor extends Promocao{
 	public float getDesconto(int quantidade,float preco) {
 		int verificador;
 		verificador=quantidade/quantativa;
+		
 		if(verificador>=1){
-			return preco*quantativa*verificador- preco_final*verificador;
+			
+			Float desconto = quantativa*preco*verificador - preco_final*verificador;
+			
+			if(desconto>0) {
+				return desconto;
+			}
 		}
+		
 	return 0;
 	}
 
-	public float getPreco_final() {
+	public Float getPreco_final() {
 		return preco_final;
 	}
 

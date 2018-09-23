@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import caixa.Produto;
+import caixa.Promocao;
 
 public class Produto_DAO {
 	
@@ -40,8 +41,11 @@ public class Produto_DAO {
 			consulta.setInt(1, id);
 			
 			ResultSet resultado = consulta.executeQuery();
+			resultado.next();
+			
 			produto.setDescricao(resultado.getString("descricao"));
 			produto.setPreco(resultado.getFloat("preco"));
+			produto.setIdPromocao(resultado.getInt("idpromocao"));
 			
 		} 
 		catch (Exception e) {
@@ -63,8 +67,11 @@ public class Produto_DAO {
 			consulta.setString(1, descricao);
 			
 			ResultSet resultado = consulta.executeQuery();
+			resultado.next();
+			
 			produto.setId(resultado.getInt("id"));
 			produto.setPreco(resultado.getFloat("preco"));
+			produto.setIdPromocao(resultado.getInt("idpromocao"));
 			
 		} 
 		catch (Exception e) {
@@ -111,7 +118,7 @@ public class Produto_DAO {
 				  e.printStackTrace();
 			      }
 			 }
-	
+		
 }
 	
 	

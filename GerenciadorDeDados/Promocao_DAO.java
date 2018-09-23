@@ -55,26 +55,35 @@ public class Promocao_DAO {
 	
 	private static final String CONSULTA_SQLPROMOCAO  = "SELECT* FROM promocao WHERE id = ?";
 
-	public static Promocao getPromocao(int id) {
+	public static Promocao getPromocao(Integer id) {
+		
+		if(id == 0) {
+			return null;
+		}
+		
 		Promocao promocao = null;
 		try(Connection conexao = FabricaConexao.getConexao();
 		PreparedStatement consulta = conexao.prepareStatement(CONSULTA_SQLPROMOCAO)){
-		
-			ResultSet resultado = consulta.executeQuery();
+			
 			consulta.setInt(1, id);
 			
-			if(resultado.getFloat("precofinal") == (Float)null) {
+			ResultSet resultado = consulta.executeQuery();
+			resultado.next();
+			
+			Float precofinal = resultado.getFloat("precofinal");
+			Integer quantpaga = resultado.getInt("quantpaga");
+			if(precofinal == 0) {
 				
 				promocao = new PromocaoRetiraProdutos(id, null, null, id, id);
-				promocao.setDescricao(resultado.getString("decicao"));
+				promocao.setDescricao(resultado.getString("descricao"));
 				promocao.setObs(resultado.getString("obs"));
 				promocao.setQuantAtiva(resultado.getInt("quantativa"));
 				promocao.setQuantpaga(resultado.getInt("quantpaga"));	
 				
-			}else if(resultado.getInt("quantpaga")== (Integer)null) {
+			}else if(quantpaga == 0) {
 				
 				promocao = new PromocaoRetiraValor(id, null, null, id, id);
-				promocao.setDescricao(resultado.getString("decicao"));
+				promocao.setDescricao(resultado.getString("descricao"));
 				promocao.setObs(resultado.getString("obs"));
 				promocao.setQuantAtiva(resultado.getInt("quantativa"));
 				promocao.setPreco_final(resultado.getFloat("precofinal"));
