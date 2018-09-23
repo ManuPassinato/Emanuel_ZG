@@ -13,22 +13,13 @@ import Objetos.Promocao;
 
 
 public class BootStrap {
-
-	private static final String CREAT_TABLERODUTO = "CREATE TABLE produtos"
-			+ "(id int NOT NULL PRIMARY KEY,"
-			+ "descricao varchar(60),"
-			+ "preco decimal(6,2) NOT NULL,"
-			+ "idPromocao int references promocao(id));";
 	
-	private static final String CREAT_TABLEPROMOCAO = "CREATE TABLE promocao"
-			+ "(id int NOT NULL PRIMARY KEY,"
-			+ "descricao varchar(60),"
-			+ "obs varchar(60),"
-			+ "quantativa int,"
-			+ "precofinal decimal(6,2),"
-			+ "quantpaga int);";
+	private static String produtoSQL = "/Users/usuário/eclipse-workspace/ZG2/src/GerenciadorDeDados/Data/produtoSQL.txt";
+	private static final String CREAT_TABLERODUTO = LeitorDeRegex.lerArquivo(produtoSQL);
 	
-	
+	private static String promocaoSQL = "/Users/usuário/eclipse-workspace/ZG2/src/GerenciadorDeDados/Data/promocaoSQL.txt";
+	private static final String CREAT_TABLEPROMOCAO = LeitorDeRegex.lerArquivo(promocaoSQL);
+		
 	
 	public static void criaTabelas() {
 		try(Connection conexao = FabricaConexao.getConexao();

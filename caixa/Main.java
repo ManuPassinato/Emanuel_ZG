@@ -13,12 +13,12 @@ public class Main {
 	
 		 	String txt = "/Users/usuário/eclipse-workspace/ZG2/src/GerenciadorDeDados/Data/Arquivo_dados_checkout.txt";
 			String url = "/Users/usuário/eclipse-workspace/ZG2/src/GerenciadorDeDados/Data/promoções.xls";
-		 	
+			
 			System.out.println("Espero que esteja tudo certo hehe");
 		 	
-		 	//BootStrap.criaTabelas();
-		 	//BootStrap.geradorPromocao(url);
-		 	//BootStrap.preencheProdutos(txt);
+		 	BootStrap.criaTabelas();
+		 	BootStrap.geradorPromocao(url);
+		 	BootStrap.preencheProdutos(txt);
 			
 		 	Caixa supermecado = new Caixa();
 		 	
@@ -78,4 +78,6 @@ public class Main {
 		 	supermecado4.removerItem(produto7);
 		 		 	
 		 	System.out.println(supermecado4.precoTotalCompra());
+		 	
+	
 }}

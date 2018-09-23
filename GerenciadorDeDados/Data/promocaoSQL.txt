@@ -1,0 +1,7 @@
+CREATE TABLE promocao
+(id int NOT NULL PRIMARY KEY,
+descricao varchar(60),
+obs varchar(60),
+quantativa int,
+precofinal decimal(6,2),
+quantpaga int);
